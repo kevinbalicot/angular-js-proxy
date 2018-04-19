@@ -1,8 +1,12 @@
 {
   "name": "angular-js-proxy",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Angular Javascript ES6 proxy",
   "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevinbalicot/angular-js-proxy"
+  },
   "dependencies": {
     "@angular/common": "^5.2.9",
     "@angular/compiler": "^5.2.9",
