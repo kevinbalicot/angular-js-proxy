@@ -4,6 +4,7 @@ An Angular ES6 proxy. If you doesn't want to use TypeScript. Work with Angular 5
 
 ⚠️ Every example, in this documentation, works with Babel
 
+
 ## Installation
 
 ``` bash
