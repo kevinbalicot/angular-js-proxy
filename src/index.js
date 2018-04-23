@@ -16,7 +16,13 @@ export function Injectable(metadata = {}) {
         target.parameters = [];
 
         if (!!metadata.providers && Array.isArray(metadata.providers)) {
-            metadata.providers.forEach(provider => target.parameters.push([new core.Inject(provider)]))
+            metadata.providers.forEach(provider => {
+                if (typeof provider === 'string') {
+                    target.parameters.push([new core.Inject(provider)]);
+                } else {
+                    target.parameters.push([new core.Inject(provider.provide), provider.useValue || provider.useClass]);
+                }
+            });
         }
 
         return target;
@@ -29,7 +35,13 @@ export function Component(metadata = {}) {
         target.parameters = [];
 
         if (!!metadata.providers && Array.isArray(metadata.providers)) {
-            metadata.providers.forEach(provider => target.parameters.push([new core.Inject(provider)]))
+            metadata.providers.forEach(provider => {
+                if (typeof provider === 'string') {
+                    target.parameters.push([new core.Inject(provider)]);
+                } else {
+                    target.parameters.push([new core.Inject(provider.provide), provider.useValue || provider.useClass]);
+                }
+            });
         }
 
         return target;
@@ -42,7 +54,13 @@ export function NgModule(metadata = {}) {
         target.parameters = [];
 
         if (!!metadata.providers && Array.isArray(metadata.providers)) {
-            metadata.providers.forEach(provider => target.parameters.push([new core.Inject(provider)]))
+            metadata.providers.forEach(provider => {
+                if (typeof provider === 'string') {
+                    target.parameters.push([new core.Inject(provider)]);
+                } else {
+                    target.parameters.push([new core.Inject(provider.provide), provider.useValue || provider.useClass]);
+                }
+            });
         }
 
         return target;
