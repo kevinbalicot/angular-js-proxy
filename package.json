@@ -1,6 +1,6 @@
 {
   "name": "angular-js-proxy",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Angular Javascript ES6 proxy",
   "main": "src/index.js",
   "repository": {
