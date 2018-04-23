@@ -4,10 +4,11 @@ require('zone.js');
 import * as compiler from '@angular/compiler';
 import * as common from '@angular/common';
 import * as core from '@angular/core';
+import * as router from '@angular/router';
 import * as platformBrowserDynamic from '@angular/platform-browser-dynamic';
 import * as platformBrowser from '@angular/platform-browser';
 
-export { compiler, common, core, platformBrowserDynamic, platformBrowser };
+export { compiler, common, core, router, platformBrowserDynamic, platformBrowser };
 
 export function Injectable(metadata = {}) {
     return function decorator(target) {
