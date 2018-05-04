@@ -17,7 +17,7 @@ export function Injectable(metadata = {}) {
 
         if (!!metadata.providers && Array.isArray(metadata.providers)) {
             metadata.providers.forEach(provider => {
-                if (typeof provider === 'string') {
+                if (!provider.useValue && !provider.useClass) {
                     target.parameters.push([new core.Inject(provider)]);
                 } else {
                     target.parameters.push([new core.Inject(provider.provide), provider.useValue || provider.useClass]);
@@ -36,7 +36,7 @@ export function Component(metadata = {}) {
 
         if (!!metadata.providers && Array.isArray(metadata.providers)) {
             metadata.providers.forEach(provider => {
-                if (typeof provider === 'string') {
+                if (!provider.useValue && !provider.useClass) {
                     target.parameters.push([new core.Inject(provider)]);
                 } else {
                     target.parameters.push([new core.Inject(provider.provide), provider.useValue || provider.useClass]);
@@ -55,7 +55,7 @@ export function NgModule(metadata = {}) {
 
         if (!!metadata.providers && Array.isArray(metadata.providers)) {
             metadata.providers.forEach(provider => {
-                if (typeof provider === 'string') {
+                if (!provider.useValue && !provider.useClass) {
                     target.parameters.push([new core.Inject(provider)]);
                 } else {
                     target.parameters.push([new core.Inject(provider.provide), provider.useValue || provider.useClass]);
