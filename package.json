@@ -1,6 +1,6 @@
 {
   "name": "angular-js-proxy",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Angular Javascript ES6 proxy",
   "main": "src/index.js",
   "repository": {
@@ -36,7 +36,9 @@
     ]
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify src/index.js -o dist/angular-js-proxy.js -t [ babelify ]",
+    "prepublish": "npm run build"
   },
   "author": "Kevin Balicot <kevinbalicot@gmail.com>",
   "license": "MIT",

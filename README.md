@@ -296,7 +296,7 @@ With this `package.json`
 Usage
 
 ``` javascript
-import { Component, NgModule, Injectable, platformBrowserDynamic, platformBrowser } from 'angular-js-proxy';
+import { Component, NgModule, platformBrowserDynamic, platformBrowser } from 'angular-js-proxy';
 import { AnotherModule } from 'another-angular-es6-module';
 
 @Component({
@@ -319,3 +319,46 @@ class Module {
 
 platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(Module);
 ```
+
+## Use Angular service
+
+Example with Angular Router service
+
+``` javascript
+import { Component, NgModule, Injectable, router, platformBrowserDynamic, platformBrowser } from 'angular-js-proxy';
+
+@Injectable()
+class MyService {}
+
+@Component({
+    selector: 'home-component',
+    template: `
+        <h1>Hello</h1>
+        <router-outlet></router-outlet>
+    `,
+    providers: [MyService]
+})
+class HomeComponent {
+    constructor(myService, ActivatedRoute) {
+        this.service = myService;
+        this.route = ActivatedRoute;
+    }
+}
+
+@NgModule({
+    imports: [
+        platformBrowser.BrowserModule,
+        router.RouterModule.forRoot([...])
+    ],
+    declarations: [HomeComponent],
+    bootstrap: [HomeComponent],
+    providers: [MyService]
+})
+class Module {
+    constructor() {}
+}
+
+platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(Module);
+```
+
+The 2nd argument of `HomeComponent` will automatically inject Angular `ActivatedRoute` service (Respect argument name as the Angular service name).
