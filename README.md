@@ -22,6 +22,7 @@ import {
     compiler,        // Angular compiler namespace
     common,          // Angular common namespace
     core,            // Angular core namespace
+    router,          // Angular router namespace
     platformBrowserDynamic, // Angular platformBrowserDynamic namespace
     platformBrowser         // Angular platformBrowser namespace
 } from 'angular-js-proxy';
