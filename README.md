@@ -1,11 +1,12 @@
 # Angular Javascript Proxy
 
-An Angular ES6 proxy. If you doesn't want to use TypeScript. Work with Angular 5.
+An Angular ES6 proxy. If you don't want to use TypeScript. Work with Angular 5.
 
 ⚠️ Every example, in this documentation, works with Babel
 
+---
 
-## Installation
+## Installation
 
 ``` bash
 $ npm install --save angular-js-proxy
