@@ -41,8 +41,12 @@ function isAngularService(providerName) {
 }
 
 function getParameters(target, metadata) {
-    const args = target.toString().match(/function [\w]+\((.*)\)/);
+    const args = target.toString().match(/(?:function [\w]+|constructor)\((.*)\)/i);
     const parameters = [];
+
+    if (null === args) {
+        return parameters;
+    }
 
     target.parameters = [];
     if (!metadata.providers || !Array.isArray(metadata.providers)) {
@@ -57,10 +61,10 @@ function getParameters(target, metadata) {
             return;
         }
 
-        angularServer = isAngularService(arg);
-        if (!!angularServer) {
+        angularService = isAngularService(arg);
+        if (!!angularService) {
             // https://stackoverflow.com/questions/38859198/angular-2-dependency-injection-in-es5-and-es6
-            parameters.push([new core.Inject(angularServer)]);
+            parameters.push([new core.Inject(angularService)]);
         } else if (!!metadata.providers[i]) {
             provider = metadata.providers[i];
             if (!provider.useValue && !provider.useClass) {
