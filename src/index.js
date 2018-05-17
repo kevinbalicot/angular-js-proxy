@@ -55,7 +55,7 @@ function getParameters(target, metadata) {
 
     let i = 0;
     let provider;
-    let angularServer;
+    let angularService;
     args[1].split(',').forEach(arg => {
         if (arg.trim() === '') {
             return;
