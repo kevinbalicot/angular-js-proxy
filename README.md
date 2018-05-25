@@ -23,6 +23,7 @@ import {
     common,          // Angular common namespace
     core,            // Angular core namespace
     router,          // Angular router namespace
+    forms,           // Angular forms namespace
     platformBrowserDynamic, // Angular platformBrowserDynamic namespace
     platformBrowser         // Angular platformBrowser namespace
 } from 'angular-js-proxy';

@@ -4,10 +4,11 @@ import * as compiler from '@angular/compiler';
 import * as common from '@angular/common';
 import * as core from '@angular/core';
 import * as router from '@angular/router';
+import * as forms from '@angular/forms';
 import * as platformBrowserDynamic from '@angular/platform-browser-dynamic';
 import * as platformBrowser from '@angular/platform-browser';
 
-export { compiler, common, core, router, platformBrowserDynamic, platformBrowser };
+export { compiler, common, core, router, platformBrowserDynamic, platformBrowser, forms };
 
 function isAngularService(providerName) {
     for (let props in common) {
@@ -109,7 +110,17 @@ export function NgModule(metadata = {}) {
     }
 }
 
+export function Directive(metadata = {}) {
+    return function decorator(target) {
+        target.annotations = [new core.Directive(metadata)];
+        target.parameters = getParameters(target, metadata);
+
+        return target;
+    }
+}
+
 window.Injectable = Injectable;
 window.Component = Component;
 window.NgModule = NgModule;
-window.ng = { compiler, common, core, router, platformBrowserDynamic, platformBrowser };
+window.Directive = Directive;
+window.ng = { compiler, common, core, router, platformBrowserDynamic, platformBrowser, forms };
