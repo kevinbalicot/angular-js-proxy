@@ -41,52 +41,40 @@ function isAngularService(providerName) {
     return null;
 }
 
-function getParameters(target, metadata) {
-    const args = target.toString().match(/(?:function [\w]+|constructor)\((.*)\)/i);
+function getParameters(metadata) {
     const parameters = [];
+    const providers = [];
 
-    if (null === args) {
-        return parameters;
-    }
-
-    target.parameters = [];
     if (!metadata.providers || !Array.isArray(metadata.providers)) {
         metadata.providers = [];
     }
 
-    let i = 0;
-    let provider;
     let angularService;
-    args[1].split(',').forEach(arg => {
-        if (arg.trim() === '') {
-            return;
-        }
-
-        angularService = isAngularService(arg);
+    metadata.providers.forEach((provider, index) => {
+        angularService = isAngularService(provider.name);
         if (!!angularService) {
             // https://stackoverflow.com/questions/38859198/angular-2-dependency-injection-in-es5-and-es6
             parameters.push([new core.Inject(angularService)]);
-        } else if (!!metadata.providers[i]) {
-            provider = metadata.providers[i];
+        } else {
             if (!provider.useValue && !provider.useClass) {
                 parameters.push([new core.Inject(provider)]);
             } else {
                 parameters.push([new core.Inject(provider.provide), provider.useValue || provider.useClass]);
             }
 
-            i++;
-        } else {
-            parameters.push(eval(arg));
+            providers.push(provider);
         }
     });
+
+    metadata.providers = providers;
 
     return parameters;
 }
 
 export function Injectable(metadata = {}) {
     return function decorator(target) {
+        target.parameters = getParameters(metadata);
         target.annotations = [new core.Injectable(metadata)];
-        target.parameters = getParameters(target, metadata);
 
         return target;
     }
@@ -94,8 +82,8 @@ export function Injectable(metadata = {}) {
 
 export function Component(metadata = {}) {
     return function decorator(target) {
+        target.parameters = getParameters(metadata);
         target.annotations = [new core.Component(metadata)];
-        target.parameters = getParameters(target, metadata);
 
         return target;
     }
@@ -103,8 +91,8 @@ export function Component(metadata = {}) {
 
 export function NgModule(metadata = {}) {
     return function decorator(target) {
+        target.parameters = getParameters(metadata);
         target.annotations = [new core.NgModule(metadata)];
-        target.parameters = getParameters(target, metadata);
 
         return target;
     }
@@ -112,8 +100,8 @@ export function NgModule(metadata = {}) {
 
 export function Directive(metadata = {}) {
     return function decorator(target) {
+        target.parameters = getParameters(metadata);
         target.annotations = [new core.Directive(metadata)];
-        target.parameters = getParameters(target, metadata);
 
         return target;
     }

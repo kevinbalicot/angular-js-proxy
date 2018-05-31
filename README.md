@@ -339,7 +339,7 @@ class MyService {}
         <h1>Hello</h1>
         <router-outlet></router-outlet>
     `,
-    providers: [MyService]
+    providers: [MyService, router.ActivatedRoute]
 })
 class HomeComponent {
     constructor(myService, ActivatedRoute) {
@@ -364,4 +364,12 @@ class Module {
 platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(Module);
 ```
 
-The 2nd argument of `HomeComponent` will automatically inject Angular `ActivatedRoute` service (Respect argument name as the Angular service name).
+To inject Angular `ActivatedRoute` service, you have to put `router.ActivatedRoute` into `providers` metadata.
+
+## Uglify
+
+`angular-js-proxy` use function name to inject Angular service, so if you use [Uglify.js](https://github.com/mishoo/UglifyJS2), you have to use `--keep-fnames` options.
+
+```
+$ uglifyjs source.js --keep-fnames -o ouput.js
+```
