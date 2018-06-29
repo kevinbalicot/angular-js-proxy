@@ -197,7 +197,7 @@ class Utils {
     template: `
         <h1>{{ message }}</h1>
     `,
-    providers: [Utils]
+    inject: [Utils] // TypeScript use type for DI, so in javascript need to define what inject
 })
 class HomeComponent {
     constructor(utils) {
@@ -229,7 +229,7 @@ class Configurator {
 }
 
 @Injectable({
-    providers: [Configurator]
+    inject: [Configurator] // You can use "providers" instead of "inject" if you want a new instance of Configurator
 })
 class API {
     constructor(configurator) {
@@ -339,7 +339,7 @@ class MyService {}
         <h1>Hello</h1>
         <router-outlet></router-outlet>
     `,
-    providers: [MyService, router.ActivatedRoute]
+    inject: [MyService, router.ActivatedRoute]
 })
 class HomeComponent {
     constructor(myService, ActivatedRoute) {
@@ -363,8 +363,6 @@ class Module {
 
 platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(Module);
 ```
-
-To inject Angular `ActivatedRoute` service, you have to put `router.ActivatedRoute` into `providers` metadata.
 
 ## Uglify
 

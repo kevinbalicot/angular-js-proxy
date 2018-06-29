@@ -45,27 +45,42 @@ function getParameters(metadata) {
     const parameters = [];
     const providers = [];
 
+    // DI : https://stackoverflow.com/questions/38859198/angular-2-dependency-injection-in-es5-and-es6
+
     if (!metadata.providers || !Array.isArray(metadata.providers)) {
         metadata.providers = [];
     }
 
+    if (!metadata.inject || !Array.isArray(metadata.inject)) {
+        metadata.inject = [];
+    }
+
     let angularService;
-    metadata.providers.forEach((provider, index) => {
+    metadata.providers.forEach(provider => {
         angularService = isAngularService(provider.name);
         if (!!angularService) {
-            // https://stackoverflow.com/questions/38859198/angular-2-dependency-injection-in-es5-and-es6
             parameters.push([new core.Inject(angularService)]);
         } else {
-            if (!provider.useValue && !provider.useClass) {
+            if (!provider.useValue && !provider.useClass && !provider.useFactory) {
                 parameters.push([new core.Inject(provider)]);
             } else {
-                parameters.push([new core.Inject(provider.provide), provider.useValue || provider.useClass]);
+                parameters.push([new core.Inject(provider.provide), provider.useValue || provider.useClass || provider.useFactory]);
             }
 
             providers.push(provider);
         }
     });
 
+    metadata.inject.forEach(provider => {
+        angularService = isAngularService(provider.name);
+        if (!!angularService) {
+            parameters.push([new core.Inject(angularService)]);
+        } else {
+            parameters.push([new core.Inject(provider)]);
+        }
+    });
+
+    delete metadata.inject;
     metadata.providers = providers;
 
     return parameters;
