@@ -1,6 +1,6 @@
 {
   "name": "angular-js-proxy",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Angular Javascript ES6 proxy",
   "main": "src/index.js",
   "repository": {
@@ -22,7 +22,8 @@
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babelify": "^8.0.0",
-    "browserify": "^16.1.1"
+    "browserify": "^16.1.1",
+    "uglify-js": "^3.4.9"
   },
   "browserify": {
     "transform": [
@@ -38,8 +39,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify src/index.js -o dist/angular-js-proxy.js -t [ babelify ]",
-    "prepublish": "npm run build"
+    "prepublish": "make build"
   },
   "author": "Kevin Balicot <kevinbalicot@gmail.com>",
   "license": "MIT",
