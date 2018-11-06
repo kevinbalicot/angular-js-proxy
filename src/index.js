@@ -52,7 +52,13 @@ function getParameters(metadata) {
     }
 
     if (!metadata.inject || !Array.isArray(metadata.inject)) {
-        metadata.inject = [];
+        metadata.injects = [];
+    } else {
+        metadata.injects = metadata.inject;
+    }
+
+    if (!metadata.injects || !Array.isArray(metadata.injects)) {
+        metadata.injects = [];
     }
 
     let angularService;
@@ -71,7 +77,7 @@ function getParameters(metadata) {
         }
     });
 
-    metadata.inject.forEach(provider => {
+    metadata.injects.forEach(provider => {
         angularService = isAngularService(provider.name);
         if (!!angularService) {
             parameters.push([new core.Inject(angularService)]);
@@ -80,7 +86,7 @@ function getParameters(metadata) {
         }
     });
 
-    delete metadata.inject;
+    delete metadata.injects;
     metadata.providers = providers;
 
     return parameters;
